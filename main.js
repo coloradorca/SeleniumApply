@@ -49,10 +49,9 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     // await daysSinceStartupLastActive.value = '30';
 
     await driver.sleep(1000);
-    // await driver
-    //   .findElement(By.xpath('//input[@name="daysSinceStartupLastActive "'))
-    //   .sendKeys('30');
-    // // .click();
+    await driver
+      .findElement(By.xpath('//input[@name="daysSinceStartupLastActive"]'))
+      .sendKeys('30', Key.ENTER);
 
     //click the button to review results
     let exitFilters = driver.findElement(
@@ -64,7 +63,7 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     //error handling
   } catch (err) {
     console.log(err);
-    // driver.quit();
+    driver.quit();
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
     await driver.sleep(5000);
