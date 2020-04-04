@@ -27,6 +27,7 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
         '//button[@data-test="SearchBar-ToggleFilterControlPanelButton"]',
       ),
     );
+    await driver.sleep(1000);
     await filterbtn.click();
 
     //find the field that excludes keywords senior
@@ -37,14 +38,17 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     );
     await excludedKeywords.sendKeys('senior', Key.ENTER);
 
+    await driver.sleep(2000);
+
     //find the field that has days since posting
 
     // let daysSinceStartupLastActive = driver.findElement(
-    //   By.xpath('//div[@name="daysSinceStartupLastActive"]'),
+    //   By.xpath('//input[@name="daysSinceStartupLastActive"]'),
     // );
 
-    // await daysSinceStartupLastActive.click();
+    // await daysSinceStartupLastActive.value = '30';
 
+    await driver.sleep(1000);
     // await driver
     //   .findElement(By.xpath('//input[@name="daysSinceStartupLastActive "'))
     //   .sendKeys('30');
@@ -64,7 +68,7 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
     await driver.sleep(5000);
-    await driver.quit();
+    // await driver.quit();
   }
 })();
 
@@ -76,3 +80,5 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
 
 // button to click view results
 // <button class="styles_component__3A0_k styles_primary__3xZwV styles_small__6SIIc styles_emphasis__KRjK8" type="button" data-test="SearchBar-ViewResultsButton">View results</button>
+
+// #main > div > div.frame_6b4d4 > div.content_1ca23 > div > div.component_3a9b0 > button > span > div
