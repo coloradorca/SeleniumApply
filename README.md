@@ -13,3 +13,5 @@ But the issue I found with ripping off his code and using it myself is twofold:
 2. I wanted to learn Selenium (not its intended use) and writing 'virtual tests' for sites..
 
 This was mostly done to 'cover my bases' and really confirm my suspicion that blindly applying for jobs is a waste of time.
+
+Some of the script navigates thru some filters that are pertinent during the time I'm applying so I needed to do a little more fine tuning of my search
