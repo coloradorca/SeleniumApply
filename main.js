@@ -38,17 +38,37 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     );
     await excludedKeywords.sendKeys('senior', Key.ENTER);
 
-    await driver.sleep(2000);
+    await driver.sleep(5000);
 
     //find the field that has days since posting
 
-    // let daysSinceStartupLastActive = driver.findElement(
+    let daysSinceStartupLastActiveOuter = driver.findElement(
+      By.xpath(
+        '//div[@class="css-1szy77t-control select__control select__control--is-focused select__control--menu-is-open"]',
+      ),
+      // <div class="css-1szy77t-control select__control select__control--is-focused select__control--menu-is-open"><div class="css-1hwfws3 select__value-container select__value-container--has-value"><div class="css-dvua67-singleValue select__single-value">30 days</div><div class="css-1g6gooi"><div class="select__input" style="display: inline-block;"><input autocapitalize="none" autocomplete="off" autocorrect="off" id="react-select-7-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;"><div style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 16px; font-family: system-ui; font-weight: 400; font-style: normal; letter-spacing: normal; text-transform: none;"></div></div></div></div><div class="css-1wy0on6 select__indicators"><span class="css-bgvzuu-indicatorSeparator select__indicator-separator"></span><div aria-hidden="true" class="css-1thkkgx-indicatorContainer select__indicator select__dropdown-indicator"><svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" class="css-19bqh2r"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg></div></div></div>
+    );
+    let reactInput = driver.findElement(By.id('react-select-7-input'));
+    await reactInput.click();
+    await reactInput.sendKeys('30');
+    // <input autocapitalize="none" autocomplete="off" autocorrect="off" id="react-select-7-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;"></input>
+
+    await daysSinceStartupLastActiveOuter.click();
+    // <div class="css-1szy77t-control select__control select__control--is-focused select__control--menu-is-open"><div class="css-1hwfws3 select__value-container select__value-container--has-value"><div class="css-dvua67-singleValue select__single-value">30 days</div><div class="css-1g6gooi"><div class="select__input" style="display: inline-block;"><input autocapitalize="none" autocomplete="off" autocorrect="off" id="react-select-7-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;"><div style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 16px; font-family: system-ui; font-weight: 400; font-style: normal; letter-spacing: normal; text-transform: none;"></div></div></div></div><div class="css-1wy0on6 select__indicators"><span class="css-bgvzuu-indicatorSeparator select__indicator-separator"></span><div aria-hidden="true" class="css-1thkkgx-indicatorContainer select__indicator select__dropdown-indicator"><svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" class="css-19bqh2r"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg></div></div></div>
+
+    // let innerDiv = daysSinceStartupLastActiveOuter.findElement(
+    //   By.xpath(
+    //     '//div[@class="css-1hwfws3 select__value-container select__value-container--has-value"]',
+    //   ),
+    // );
+
+    // let daysSinceStartupLastActiveInput = daysSinceStartupLastActiveOuter.findElement(
     //   By.xpath('//input[@name="daysSinceStartupLastActive"]'),
     // );
 
-    // await daysSinceStartupLastActive.value = '30';
+    // await innerDiv.click();
 
-    await driver.sleep(1000);
+    await driver.sleep(5000);
     await driver
       .findElement(By.xpath('//input[@name="daysSinceStartupLastActive"]'))
       .sendKeys('30', Key.ENTER);
