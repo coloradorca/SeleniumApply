@@ -38,7 +38,7 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     );
     await excludedKeywords.sendKeys('senior', Key.ENTER);
 
-    await driver.sleep(2000);
+    await driver.sleep(1000);
 
     //click the button to review results
     let exitFilters = driver.findElement(
@@ -46,7 +46,7 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     );
     await exitFilters.click();
 
-    await driver.sleep(2000);
+    await driver.sleep(1000);
 
     //filter jobs by the newest listing
     await driver
@@ -60,6 +60,20 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
       .findElement(By.xpath("//*[contains(text(), 'Newest')]"))
       .click();
 
+    // let applyButtons = driver.findElement(
+    //   By.xpath(
+    //     '(//button[@class="styles_component__3A0_k styles_secondary__2g46E styles_small__6SIIc component_f6e8c apply_2e295 component_21dbe"])[1]',
+    //   ),
+    // );
+
+    let applyButtons = driver.findElement(By.xpath("//span[@class='Apply']"));
+    // let applyButtons = driver.findElement(
+    //   By.className(
+    //     'styles_component__3A0_k styles_secondary__2g46E styles_small__6SIIc component_f6e8c apply_2e295 component_21dbe',
+    //   ),
+    // );
+    await applyButtons.click();
+
     //error handling
   } catch (err) {
     console.log(err);
@@ -70,14 +84,3 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
     // await driver.quit();
   }
 })();
-
-// field for excludedKeywords
-// <input class="styles_component__1gMPT input_8bf46 styles_bordered__20Gln styles_warning__2qKxy" type="text" data-test="KeywordsFilterField--excludedKeywords--input" placeholder="Enter a keyword">
-
-// field for last 30 days
-// <input name="daysSinceStartupLastActive" type="hidden" value="30">
-
-// button to click view results
-// <button class="styles_component__3A0_k styles_primary__3xZwV styles_small__6SIIc styles_emphasis__KRjK8" type="button" data-test="SearchBar-ViewResultsButton">View results</button>
-
-// #main > div > div.frame_6b4d4 > div.content_1ca23 > div > div.component_3a9b0 > button > span > div
