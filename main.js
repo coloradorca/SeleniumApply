@@ -65,19 +65,34 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
 
     await driver.sleep(3000);
 
-    let applyButtons = driver.findElement(
+    //create an array of all of the apply buttons
+    let applyButtons = driver.findElements(
       By.xpath("//button[contains(text(), 'Apply')]"),
     );
+    //iterate over all of the apply buttons and step down, applying for all of the jobs
+    for (let job of applyButtons) {
+      await job.click();
 
-    await applyButtons.click();
+      await driver.sleep(2000);
 
-    await driver.sleep(2000);
+      await driver.findElement(By.name('userNote')).sendKeys(spiel);
 
-    await driver.findElement(By.name('userNote')).sendKeys(spiel);
+      await driver
+        .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
+        .click();
+    }
 
-    await driver.findElement(
-      By.xpath('//button[contains(text(), "Send application")]'),
-    );
+    //The below code will apply to one individual job
+
+    // await applyButtons.click();
+
+    // await driver.sleep(2000);
+
+    // await driver.findElement(By.name('userNote')).sendKeys(spiel);
+
+    // await driver
+    //   .findElement(By.xpath('//button[contains(text(), "Send application")]'))
+    //   .click();
 
     //error handling
   } catch (err) {
