@@ -1,7 +1,7 @@
 const { Builder, By, Key, Select } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 // const url = require('./url.js');
-const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
+const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
 
 (async function myFunction() {
   //create a new instance of a driver with chrome
@@ -48,31 +48,36 @@ const { usernameAndPw, loginUrl } = require('./usernameAndPw.js');
 
     await driver.sleep(1000);
 
-    //filter jobs by the newest listing
+    // filter jobs by the newest listing
     await driver
       .findElement(
         By.xpath(
-          '//button[@class="styles_component__3A0_k styles_secondaryGray__HjszQ styles_regular__3b1-C styles_emphasis__KRjK8 button_cecdc"]',
+          // '//button[@class="styles_component__3A0_k styles_secondaryGray__HjszQ styles_regular__3b1-C styles_emphasis__KRjK8 button_cecdc"]',
+          "//*[contains(text(), 'Recommended')]",
         ),
       )
       .click();
+
+    await driver.sleep(1000);
     await driver
       .findElement(By.xpath("//*[contains(text(), 'Newest')]"))
       .click();
 
-    // let applyButtons = driver.findElement(
-    //   By.xpath(
-    //     '(//button[@class="styles_component__3A0_k styles_secondary__2g46E styles_small__6SIIc component_f6e8c apply_2e295 component_21dbe"])[1]',
-    //   ),
-    // );
+    await driver.sleep(3000);
 
-    let applyButtons = driver.findElement(By.xpath("//span[@class='Apply']"));
-    // let applyButtons = driver.findElement(
-    //   By.className(
-    //     'styles_component__3A0_k styles_secondary__2g46E styles_small__6SIIc component_f6e8c apply_2e295 component_21dbe',
-    //   ),
-    // );
+    let applyButtons = driver.findElement(
+      By.xpath("//button[contains(text(), 'Apply')]"),
+    );
+
     await applyButtons.click();
+
+    await driver.sleep(2000);
+
+    await driver.findElement(By.name('userNote')).sendKeys(spiel);
+
+    await driver.findElement(
+      By.xpath('//button[contains(text(), "Send application")]'),
+    );
 
     //error handling
   } catch (err) {
