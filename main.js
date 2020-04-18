@@ -17,51 +17,52 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
       .findElement(By.name('user[password]'))
       .sendKeys(usernameAndPw[1], Key.ENTER);
 
-    //TODO scroll to bottom of page
+    //TODO?  (scroll to bottom of page, not really necessary)
+    // await driver.scrollTo(0, documet.body.scrollHeight);
 
     //I'm using the xpath selector as there wasn't any readily accessible class names or Id to use
 
     // //click filter button to add more filters (narrow down to non-senior and active in the last 15 days( due to Covid19, older than 30days is probably a no go))
-    let filterbtn = driver.findElement(
-      By.xpath(
-        '//button[@data-test="SearchBar-ToggleFilterControlPanelButton"]',
-      ),
-    );
-    await driver.sleep(1000);
-    await filterbtn.click();
+    // let filterbtn = driver.findElement(
+    //   By.xpath(
+    //     '//button[@data-test="SearchBar-ToggleFilterControlPanelButton"]',
+    //   ),
+    // );
+    // await driver.sleep(1000);
+    // await filterbtn.click();
 
-    //find the field that excludes keywords senior
-    let excludedKeywords = driver.findElement(
-      By.xpath(
-        '//input[@data-test="KeywordsFilterField--excludedKeywords--input"]',
-      ),
-    );
-    await excludedKeywords.sendKeys('senior', Key.ENTER);
+    // //find the field that excludes keywords senior
+    // let excludedKeywords = driver.findElement(
+    //   By.xpath(
+    //     '//input[@data-test="KeywordsFilterField--excludedKeywords--input"]',
+    //   ),
+    // );
+    // await excludedKeywords.sendKeys('senior', Key.ENTER);
 
-    await driver.sleep(1000);
+    // await driver.sleep(1000);
 
-    //click the button to review results
-    let exitFilters = driver.findElement(
-      By.xpath('//button[@data-test="SearchBar-ViewResultsButton"]'),
-    );
-    await exitFilters.click();
+    // //click the button to review results
+    // let exitFilters = driver.findElement(
+    //   By.xpath('//button[@data-test="SearchBar-ViewResultsButton"]'),
+    // );
+    // await exitFilters.click();
 
-    await driver.sleep(1000);
+    // await driver.sleep(1000);
 
-    // filter jobs by the newest listing
-    await driver
-      .findElement(
-        By.xpath(
-          // '//button[@class="styles_component__3A0_k styles_secondaryGray__HjszQ styles_regular__3b1-C styles_emphasis__KRjK8 button_cecdc"]',
-          "//*[contains(text(), 'Recommended')]",
-        ),
-      )
-      .click();
+    // // filter jobs by the newest listing
+    // await driver
+    //   .findElement(
+    //     By.xpath(
+    //       // '//button[@class="styles_component__3A0_k styles_secondaryGray__HjszQ styles_regular__3b1-C styles_emphasis__KRjK8 button_cecdc"]',
+    //       "//*[contains(text(), 'Recommended')]",
+    //     ),
+    //   )
+    //   .click();
 
-    await driver.sleep(1000);
-    await driver
-      .findElement(By.xpath("//*[contains(text(), 'Newest')]"))
-      .click();
+    // await driver.sleep(1000);
+    // await driver
+    //   .findElement(By.xpath("//*[contains(text(), 'Newest')]"))
+    //   .click();
 
     await driver.sleep(3000);
 
@@ -69,18 +70,42 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
     let applyButtons = driver.findElements(
       By.xpath("//button[contains(text(), 'Apply')]"),
     );
-    //iterate over all of the apply buttons and step down, applying for all of the jobs
-    for (let job of applyButtons) {
-      await job.click();
 
-      await driver.sleep(2000);
+    applyButtons.then((jobListings) => {
+      jobListings.forEach(function (element, index) {
+        element.click()
+        // await driver.sleep(2000)
+        .then(() => driver.sleep(2000) )
+        // await driver.findElement(By.name('userNote')).sendKeys(spiel);
+        .then(() => driver.findElement(By.name('userNote')).sendKeys(spiel))
 
-      await driver.findElement(By.name('userNote')).sendKeys(spiel);
-
-      await driver
+        .then(() => driver
         .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
-        .click();
+        .click())
+        // await driver.findElement(By.xpath("//button[contains(text(), 'Cancel')]")).click();
     }
+
+        console.log('element:  ', element, 'index:  ', index);
+        // element.getAttribute('align').then(function (attribute) {
+        //   console.log('attribute: ' + attribute);
+        // });
+      });
+    });
+
+
+    //iterate over all of the apply buttons and step down, applying for all of the jobs
+
+    // for (let job of applyButtons) {
+    //   await job.click();
+
+    //   await driver.sleep(2000);
+
+    //   await driver.findElement(By.name('userNote')).sendKeys(spiel);
+
+    //   await driver
+    //     .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
+    //     .click();
+    // }
 
     //The below code will apply to one individual job
 
