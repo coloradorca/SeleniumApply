@@ -64,48 +64,26 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
     //   .findElement(By.xpath("//*[contains(text(), 'Newest')]"))
     //   .click();
 
-    await driver.sleep(3000);
+    await driver.sleep(2000);
 
-    //create an array of all of the apply buttons
+    //capture an array of all apply buttons (they are promises)
     let applyButtons = driver.findElements(
       By.xpath("//button[contains(text(), 'Apply')]"),
     );
 
-    applyButtons.then((jobListings) => {
-      jobListings.forEach(function (element, index) {
-        element.click()
-        // await driver.sleep(2000)
-        .then(() => driver.sleep(2000) )
-        // await driver.findElement(By.name('userNote')).sendKeys(spiel);
-        .then(() => driver.findElement(By.name('userNote')).sendKeys(spiel))
-
-        .then(() => driver
-        .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
-        .click())
-        // await driver.findElement(By.xpath("//button[contains(text(), 'Cancel')]")).click();
-    }
-
-        console.log('element:  ', element, 'index:  ', index);
-        // element.getAttribute('align').then(function (attribute) {
-        //   console.log('attribute: ' + attribute);
-        // });
-      });
-    });
-
-
     //iterate over all of the apply buttons and step down, applying for all of the jobs
 
-    // for (let job of applyButtons) {
-    //   await job.click();
-
-    //   await driver.sleep(2000);
-
-    //   await driver.findElement(By.name('userNote')).sendKeys(spiel);
-
-    //   await driver
-    //     .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
-    //     .click();
-    // }
+    applyButtons.then((jobListings) => {
+      jobListings.forEach(async (element, index) => {
+        jobListings[10].click();
+        // await driver.findElement(By.name('userNote')).sendKeys(spiel);
+        await driver.sleep(2000);
+        await driver
+          .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
+          .click();
+        await driver.sleep(2000);
+      });
+    });
 
     //The below code will apply to one individual job
 
