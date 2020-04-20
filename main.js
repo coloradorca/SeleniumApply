@@ -127,6 +127,6 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
     await driver.sleep(4000);
-    await driver.quit();
+    // await driver.quit();
   }
 })();
