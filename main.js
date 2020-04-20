@@ -1,5 +1,6 @@
 const { Builder, By, Key, Select } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+const moment = require('moment');
 // const url = require('./url.js');
 const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
@@ -72,29 +73,48 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
         let applyButton = driver.findElement(
           By.xpath("//button[contains(text(), 'Apply')]"),
         );
+        //click on the apply button
         applyButton.click();
-
+        //give a couple seconds to load
         await driver.sleep(2000);
 
-        let company;
+        //get company and hiring contact name
+        let company, hiringContact;
         await driver
           .findElement(By.className('startup_5f07e'))
           .getText()
           .then((text) => (company = text));
-        await console.log(company);
 
-        await driver.findElement(
-          By.xpath('//button[contains(text(), "Cancel")]'),
+        await driver
+          .findElement(
+            By.xpath("//*[contains(text(), 'Your hiring contact is ')]"),
+          )
+          .getText()
+          .then((hirer) => {
+            var contact = hirer.split(' ');
+            hiringContact = contact.slice(-2).join(' ');
+          });
+        //print the information to the console
+        await console.log(
+          'Applied to: ',
+          company,
+          'at: ',
+          moment().format('MMMM Do YYYY, h:mm:ss a'),
+          'and the Hiring Contact is: ',
+          hiringContact,
         );
+        //send the note to the job poster
+        await driver
+          .findElement(By.name('userNote'))
+          .sendKeys(`Hello ${hiringContact}, \n ${note}`);
 
-        // //send the note to the job poster
-        // await driver.findElement(By.name('userNote')).sendKeys(note);
-        // //SUBMIT!
-        // await driver
-        //   .findElement(
-        //     By.xpath('//button[contains(text(), "Send application")]'),
-        //   )
-        //   .click();
+        await driver.sleep(2000);
+        //SUBMIT!
+        await driver
+          .findElement(
+            By.xpath('//button[contains(text(), "Send application")]'),
+          )
+          .click();
 
         await driver.sleep(3000);
         counter++;
