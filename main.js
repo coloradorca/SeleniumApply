@@ -12,7 +12,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
     await driver.get(loginUrl);
     //enter the text 'username' into the input field
     await driver.findElement(By.name('user[email]')).sendKeys(usernameAndPw[0]);
-    //enter the password and hit enter
+    //enter the password and press enter
     await driver
       .findElement(By.name('user[password]'))
       .sendKeys(usernameAndPw[1], Key.ENTER);
@@ -63,103 +63,50 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     await driver.sleep(2000);
 
-    //the follow block is an anonymous asynchrounous function that updates with the DOM every pass of the loop
+    //the follow block is an anonymous asynchrounous IIFE that updates with the DOM every pass of the loop
     (async function () {
       let counter = 0;
       //change the number to define how many jobs are applied for
       while (counter < 1) {
-        // the apply button is redefined after every pass to reflect the change in the DOM
+        // the apply button is selected and redefined after every pass to reflect the change in the DOM
         let applyButton = driver.findElement(
           By.xpath("//button[contains(text(), 'Apply')]"),
         );
         applyButton.click();
+
         await driver.sleep(2000);
-        await driver.findElement(By.name('userNote')).sendKeys(note);
+
+        let company;
         await driver
-          .findElement(
-            By.xpath('//button[contains(text(), "Send application")]'),
-          )
-          .click();
+          .findElement(By.className('startup_5f07e'))
+          .getText()
+          .then((text) => (company = text));
+        await console.log(company);
+
+        await driver.findElement(
+          By.xpath('//button[contains(text(), "Cancel")]'),
+        );
+
+        // //send the note to the job poster
+        // await driver.findElement(By.name('userNote')).sendKeys(note);
+        // //SUBMIT!
+        // await driver
+        //   .findElement(
+        //     By.xpath('//button[contains(text(), "Send application")]'),
+        //   )
+        //   .click();
 
         await driver.sleep(3000);
-      }
-      counter++;
-    })();
-
-    //apply to one individual job
-    const applyForOneJob = async (applyButtons) => {
-      try {
-        await applyButtons.click();
-
-        // await consoleName();
-
-        await driver.sleep(2000);
-
-        await driver.findElement(By.name('userNote')).sendKeys(note);
-
-        await driver
-          .findElement(
-            By.xpath('//button[contains(text(), "Send application")]'),
-          )
-          .click();
-
-        await driver.sleep(3000);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        await driver.sleep(2000);
+        counter++;
       }
       return;
-    };
+    })();
   } catch (err) {
     console.log(err);
     driver.quit();
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
     await driver.sleep(4000);
-    // await driver.quit();
+    await driver.quit();
   }
 })();
-
-// let applyButtons = driver.findElements(
-//   By.xpath("//button[contains(text(), 'Apply')]"),
-// );
-
-//iterate over all of the apply buttons and step down, applying for all of the jobs
-
-// applyButtons
-//   .then((jobListings) => {
-//     var promises = [];
-//     jobListings.map(async (el, index) => {
-//       if (index < 2) {
-//         promises.push(jobListings[0]);
-//         // let promiseOne = await applyForOneJob(el);
-//         // let promiseTwo = await driver.sleep(3000);
-//       }
-//       // return promises;
-//     });
-//     Promise.all(promises).then((promises) => {
-//       return promises.map((job, index) => {
-//         console.log(job);
-//         applyForOneJob(job);
-//       });
-//     });
-//   })
-
-//   .catch((err) => console.log(err));
-
-// print name of company
-// const consoleName = () => {
-//   var textPromise = driver
-//     .findElement(
-//       // By.xpath("//a[@class='component_21e4d defaultLink_7325e']"),
-//       By.className(
-//         'styles_component__2IuIv logo_d3b8b styles_xsmall__2S8q9 styles_square__53UBi',
-//       ),
-//     )
-//     .getText()
-//     .then((text) => {
-//       console.log(text);
-//     });
-//   console.log(textPromise);
-// };
