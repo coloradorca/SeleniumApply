@@ -1,7 +1,7 @@
 const { Builder, By, Key, Select } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 // const url = require('./url.js');
-const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
+const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
 (async function myFunction() {
   //create a new instance of a driver with chrome
@@ -16,9 +16,6 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
     await driver
       .findElement(By.name('user[password]'))
       .sendKeys(usernameAndPw[1], Key.ENTER);
-
-    //TODO?  (scroll to bottom of page, not really necessary)
-    // await driver.scrollTo(0, documet.body.scrollHeight);
 
     //I'm using the xpath selector as there wasn't any readily accessible class names or Id to use
 
@@ -74,28 +71,57 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
     //iterate over all of the apply buttons and step down, applying for all of the jobs
 
     applyButtons.then((jobListings) => {
-      jobListings.forEach(async (element, index) => {
-        jobListings[10].click();
-        // await driver.findElement(By.name('userNote')).sendKeys(spiel);
-        await driver.sleep(2000);
-        await driver
-          .findElement(By.xpath("//button[contains(text(), 'Cancel')]"))
-          .click();
-        await driver.sleep(2000);
+      // var promises = [];
+      jobListings.forEach(async (el, index) => {
+        if (index < 3) {
+          // promises.push(el);
+          await applyForOneJob(el);
+        }
+        // return promises;
       });
+      // .then((promises) => {
+      //   console.log(promises);
+      // });
     });
+    //apply to one individual job
+    const applyForOneJob = async (applyButtons) => {
+      try {
+        await applyButtons.click();
 
-    //The below code will apply to one individual job
+        // await consoleName();
 
-    // await applyButtons.click();
+        await driver.sleep(2000);
 
-    // await driver.sleep(2000);
+        await driver.findElement(By.name('userNote')).sendKeys(note);
 
-    // await driver.findElement(By.name('userNote')).sendKeys(spiel);
+        await driver
+          .findElement(
+            By.xpath('//button[contains(text(), "Send application")]'),
+          )
+          .click();
 
-    // await driver
-    //   .findElement(By.xpath('//button[contains(text(), "Send application")]'))
-    //   .click();
+        await driver.sleep(3000);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        await driver.sleep(2000);
+      }
+      return;
+    };
+
+    //print name of company
+    // const consoleName = () => {
+    //   var textPromise = driver
+    //     .findElement(
+    //       By.xpath(
+    //         "//*[@class='styles_component__1kg4S startupName_c5f67 __halo_fontSizeMap_size--xl __halo_fontWeight_medium']",
+    //       ),
+    //     )
+    //     .getText()
+    //     .then((text) => {
+    //       console.log(text);
+    //     });
+    // };
 
     //error handling
   } catch (err) {
@@ -103,7 +129,7 @@ const { usernameAndPw, loginUrl, spiel } = require('./usernameAndPw.js');
     driver.quit();
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
-    await driver.sleep(5000);
-    // await driver.quit();
+    await driver.sleep(4000);
+    await driver.quit();
   }
 })();
