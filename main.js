@@ -63,26 +63,29 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     await driver.sleep(2000);
 
-    //capture an array of all apply buttons (they are promises)
-    let applyButtons = driver.findElements(
-      By.xpath("//button[contains(text(), 'Apply')]"),
-    );
+    //the follow block is an anonymous asynchrounous function that updates with the DOM every pass of the loop
+    (async function () {
+      let counter = 0;
+      //change the number to define how many jobs are applied for
+      while (counter < 1) {
+        // the apply button is redefined after every pass to reflect the change in the DOM
+        let applyButton = driver.findElement(
+          By.xpath("//button[contains(text(), 'Apply')]"),
+        );
+        applyButton.click();
+        await driver.sleep(2000);
+        await driver.findElement(By.name('userNote')).sendKeys(note);
+        await driver
+          .findElement(
+            By.xpath('//button[contains(text(), "Send application")]'),
+          )
+          .click();
 
-    //iterate over all of the apply buttons and step down, applying for all of the jobs
+        await driver.sleep(3000);
+      }
+      counter++;
+    })();
 
-    applyButtons.then((jobListings) => {
-      // var promises = [];
-      jobListings.forEach(async (el, index) => {
-        if (index < 3) {
-          // promises.push(el);
-          await applyForOneJob(el);
-        }
-        // return promises;
-      });
-      // .then((promises) => {
-      //   console.log(promises);
-      // });
-    });
     //apply to one individual job
     const applyForOneJob = async (applyButtons) => {
       try {
@@ -108,28 +111,55 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
       }
       return;
     };
-
-    //print name of company
-    // const consoleName = () => {
-    //   var textPromise = driver
-    //     .findElement(
-    //       By.xpath(
-    //         "//*[@class='styles_component__1kg4S startupName_c5f67 __halo_fontSizeMap_size--xl __halo_fontWeight_medium']",
-    //       ),
-    //     )
-    //     .getText()
-    //     .then((text) => {
-    //       console.log(text);
-    //     });
-    // };
-
-    //error handling
   } catch (err) {
     console.log(err);
     driver.quit();
   } finally {
     //wait a couple seconds to see what the code above did, then quit the automation
     await driver.sleep(4000);
-    await driver.quit();
+    // await driver.quit();
   }
 })();
+
+// let applyButtons = driver.findElements(
+//   By.xpath("//button[contains(text(), 'Apply')]"),
+// );
+
+//iterate over all of the apply buttons and step down, applying for all of the jobs
+
+// applyButtons
+//   .then((jobListings) => {
+//     var promises = [];
+//     jobListings.map(async (el, index) => {
+//       if (index < 2) {
+//         promises.push(jobListings[0]);
+//         // let promiseOne = await applyForOneJob(el);
+//         // let promiseTwo = await driver.sleep(3000);
+//       }
+//       // return promises;
+//     });
+//     Promise.all(promises).then((promises) => {
+//       return promises.map((job, index) => {
+//         console.log(job);
+//         applyForOneJob(job);
+//       });
+//     });
+//   })
+
+//   .catch((err) => console.log(err));
+
+// print name of company
+// const consoleName = () => {
+//   var textPromise = driver
+//     .findElement(
+//       // By.xpath("//a[@class='component_21e4d defaultLink_7325e']"),
+//       By.className(
+//         'styles_component__2IuIv logo_d3b8b styles_xsmall__2S8q9 styles_square__53UBi',
+//       ),
+//     )
+//     .getText()
+//     .then((text) => {
+//       console.log(text);
+//     });
+//   console.log(textPromise);
+// };
