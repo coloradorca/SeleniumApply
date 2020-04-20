@@ -1,6 +1,7 @@
 const { Builder, By, Key, Select } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const moment = require('moment');
+const fs = require('fs');
 // const url = require('./url.js');
 const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
@@ -68,7 +69,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
     (async function () {
       let counter = 0;
       //change the number to define how many jobs are applied for
-      while (counter < 1) {
+      while (counter < 3) {
         // the apply button is selected and redefined after every pass to reflect the change in the DOM
         let applyButton = driver.findElement(
           By.xpath("//button[contains(text(), 'Apply')]"),
@@ -102,6 +103,11 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
           moment().format('MMMM Do YYYY, h:mm:ss a'),
           'and the Hiring Contact is: ',
           hiringContact,
+        );
+        //keep a log of all the jobs applied for
+        await fs.appendFileSync(
+          '/Users/robgonzalez-pita/Desktop/CODE/SeleniumApply/appliedJobs.csv',
+          `${company}, ${moment().format('MMM Do YY')}, ${hiringContact}, \n`,
         );
         //send the note to the job poster
         await driver
