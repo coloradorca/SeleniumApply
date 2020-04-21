@@ -68,7 +68,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
     (async function () {
       let counter = 0;
       //change the number to define how many jobs are applied for
-      while (counter < 2) {
+      while (counter < 7) {
         try {
           // the apply button is selected and redefined after every pass to reflect the change in the DOM
           let applyButton = driver.findElement(
