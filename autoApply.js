@@ -8,7 +8,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
   //create a new instance of a driver with chrome
   let driver = await new Builder().forBrowser('chrome').build();
   await driver.manage().window().setRect({ x: 0, y: 0 });
-  await driver.manage().window().setRect({ width: 1024, height: 568 });
+  await driver.manage().window().setRect({ width: 1010, height: 868 });
 
   try {
     //navigate to login pagin
@@ -68,7 +68,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
     (async function () {
       let counter = 0;
       //change the number to define how many jobs are applied for
-      while (counter < 3) {
+      while (counter < 2) {
         try {
           // the apply button is selected and redefined after every pass to reflect the change in the DOM
           let applyButton = driver.findElement(
@@ -77,14 +77,23 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
           //click on the apply button
           applyButton.click();
           //give a couple seconds to load
-          await driver.sleep(2000);
+          await driver.sleep(3000);
 
           //get company name and hiring contact name
           let company, hiringContact;
           await driver
             .findElement(By.className('startup_5f07e'))
             .getText()
-            .then((text) => (company = text));
+            //write a conditional here if there is no company listed
+            .then((text) => {
+              if (text) {
+                company = text;
+              } else {
+                company = 'Undefined';
+              }
+            });
+
+          await driver.sleep(2000);
 
           await driver
             .findElement(
@@ -92,9 +101,21 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
             )
             .getText()
             .then((hirer) => {
-              var contact = hirer.split(' ');
-              hiringContact = contact.slice(-2).join(' ');
+              if (hirer) {
+                var contact = hirer.split(' ');
+                hiringContact = contact.slice(-2).join(' ');
+              } else {
+                hiringContact = 'Could not get a contact';
+              }
             });
+
+          //send a Note to the job poster
+          await driver
+            .findElement(By.name('userNote'))
+            .sendKeys(`Hello ${hiringContact}, \n ${note}`);
+
+          await driver.sleep(2000);
+
           //print the information to the console
           await console.log(
             'Applied to: ',
@@ -105,16 +126,12 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
             'and the Hiring Contact is: ',
             hiringContact,
           );
+
           //keep a log of all the jobs applied for by writing the info to a CSV file
           await fs.appendFileSync(
             '/Users/robgonzalez-pita/Desktop/CODE/SeleniumApply/appliedJobs.csv',
             `${company}, ${moment().format('MMM Do YY')}, ${hiringContact}, \n`,
           );
-          //send the note to the job poster
-          await driver
-            .findElement(By.name('userNote'))
-            .sendKeys(`Hello ${hiringContact}, \n ${note}`);
-
           await driver.sleep(2000);
 
           //Click that Submit Button!
