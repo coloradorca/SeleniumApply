@@ -21,7 +21,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
       .findElement(By.name('user[password]'))
       .sendKeys(usernameAndPw[1], Key.ENTER);
 
-    //click filter button to add more filters (narrow down to non-senior and active in the last 15 days( due to Covid19, older than 30days is probably a no go))
+    //click filter button to add more filters (narrow down to non-senior roles)
     let filterbtn = driver.findElement(
       By.xpath(
         '//button[@data-test="SearchBar-ToggleFilterControlPanelButton"]',
@@ -40,7 +40,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     await driver.sleep(1000);
 
-    //click the button to review results
+    //click the button to review results (due to Covid19, I'm prioritizing newest listings)
     let exitFilters = driver.findElement(
       By.xpath('//button[@data-test="SearchBar-ViewResultsButton"]'),
     );
@@ -50,12 +50,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     // filter jobs by the newest listing
     await driver
-      .findElement(
-        By.xpath(
-          // '//button[@class="styles_component__3A0_k styles_secondaryGray__HjszQ styles_regular__3b1-C styles_emphasis__KRjK8 button_cecdc"]',
-          "//*[contains(text(), 'Recommended')]",
-        ),
-      )
+      .findElement(By.xpath("//*[contains(text(), 'Recommended')]"))
       .click();
 
     await driver.sleep(1000);
@@ -65,10 +60,10 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     await driver.sleep(2000);
 
-    //the follow block is an anonymous asynchrounous IIFE that updates with the DOM every pass of the loop
+    //the following is an anonymous asynchrounous IIFE that updates with the DOM every pass of the loop and applys for each job sequentially and methodically (of course, its a computer)
     (async function () {
       let counter = 0;
-      //change the number to define how many jobs are applied for
+      //change the number below to define how many jobs are applied for
       while (counter < 7) {
         try {
           // the apply button is selected and redefined after every pass to reflect the change in the DOM
@@ -85,7 +80,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
           await driver
             .findElement(By.className('startup_5f07e'))
             .getText()
-            //write a conditional here if there is no company listed
+            //if there is no company listed, set it to 'Undefined'
             .then((text) => {
               if (text) {
                 company = text;

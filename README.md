@@ -1,6 +1,6 @@
 # SeleniumApply
 
-Automate Job Applications for jobs on Angel.co using Selenium WebDriver.
+Automate Job Applications for job listings on Angel.co using Selenium WebDriver.
 
 ## Description
 
@@ -32,7 +32,7 @@ This was mostly done to 'cover my bases' and really confirm my suspicion that bl
 
 Create a profile on [AngelList](https://angel.co/)
 
-Create some basic filters on what types of jobs you're looking for. Ensure those filters are correct, and verify by closing out of that window, log in again, and see if they persist. If the filters persisted, the following program should pick them up when you log in from each new instance of the WebDriver.
+Create some basic filters on what types of jobs you're looking for. Ensure those filters are correct, and verify by closing out of that window, log in again, and see if they persist. If the filters persisted, the following program should pick them up when you log in with each new instance of the WebDriver.
 
 Install [Selenium](https://www.npmjs.com/package/selenium-webdriver)
 
@@ -50,9 +50,9 @@ Verify your webdriver is indeed in your PATH
 
 That should be enough to get you started...
 
-If you're running into complications with getting the exe file in your PATH env variable [This Link](https://www.kenst.com/2015/03/including-the-chromedriver-location-in-macos-system-path/) might be usefull.
+You will have to create a new file in the root directory named usernameAndPw.js where you will create and store variables(usernameAndPw, loginUrl, note) as defined in the autoApply.js file on line 5. The usernameAndPw variable should look like:
 
-You will have to create a new file in the root directory named usernameAndPw.js where you will create and store variables as defined in the autoApply.js file on line 5.
+`['YourEmailAddress@gmail.com', 'TopsecretPW1234']`
 
 If you so choose to keep track of the jobs you applied to, create a new .csv file and on line 133 of autoApply.js, point the fs.appendFileSync function to the correct path.
 
@@ -61,6 +61,8 @@ If you so choose to keep track of the jobs you applied to, create a new .csv fil
 ## Notes
 
 Some of the script navigates filters that are pertinent during the time I'm applying (Covid Days). So these filters might not be pertinent to all job seekers in a given market. The code is heavily commented and explained to give step by step explanations of what each line of code does.
+
+I had some complications with getting the exe file in my PATH env variable, [this Link](https://www.kenst.com/2015/03/including-the-chromedriver-location-in-macos-system-path/) might be useful resource.
 
 ## Author
 
