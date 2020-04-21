@@ -18,13 +18,17 @@ But the issues I found with ripping off his code and using it myself are:
 
 ---
 
-## Reasoning behind this Project
+## Reasoning
 
 This was mostly done to 'cover my bases' and really confirm my suspicion that blindly applying for jobs is a waste of time.
 
 ---
 
-## Getting Started
+## Example
+
+[Youtube Video](https://youtu.be/xCWGoQNxbpU) displaying this program sending....
+
+## Installation
 
 Create a profile on [AngelList](https://angel.co/)
 
