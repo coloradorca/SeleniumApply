@@ -7,6 +7,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 (async function myFunction() {
   //create a new instance of a driver with chrome
   let driver = await new Builder().forBrowser('chrome').build();
+  //set the position and dimensions of the webdriver
   await driver.manage().window().setRect({ x: 0, y: 0 });
   await driver.manage().window().setRect({ width: 1010, height: 868 });
 
