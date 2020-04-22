@@ -18,15 +18,11 @@ But the issues I found with ripping off his code and using it myself are:
 
 ---
 
-## Reasoning
-
-This was mostly done to 'cover my bases' and really confirm my suspicion that blindly applying for jobs is a waste of time.
-
----
-
-## Example
+## Examples
 
 [Youtube Video](https://youtu.be/xCWGoQNxbpU) displaying this program sending....
+
+![image](screenshot.png)
 
 ## Installation
 

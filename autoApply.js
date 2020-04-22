@@ -80,7 +80,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
           await driver
             .findElement(By.className('startup_5f07e'))
             .getText()
-            //if there is no company listed, set it to 'Undefined'
+            //set the company name and if there is no company listed, set it to 'Undefined'
             .then((text) => {
               if (text) {
                 company = text;
@@ -98,6 +98,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
             .getText()
             .then((hirer) => {
               if (hirer) {
+                //not ideal way of doing this, since some hiring contacts have middle names listed...
                 var contact = hirer.split(' ');
                 hiringContact = contact.slice(-2).join(' ');
               } else {
@@ -105,7 +106,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
               }
             });
 
-          //send a Note to the job poster
+          //send the note variable (string) as defined in usernameAndPW.js to the hiring contact
           await driver
             .findElement(By.name('userNote'))
             .sendKeys(`Hello ${hiringContact}, \n ${note}`);
@@ -137,12 +138,14 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
             )
             .click();
 
+          //give the driver some time before moving on to the next job
           await driver.sleep(2000);
 
           //handle any errors
         } catch (err) {
           console.log(err);
         }
+        //increment the counter and 2020-04-21-18-09-29.pngstep to the next job
         counter++;
       }
       return;
