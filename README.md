@@ -6,12 +6,13 @@ Automate Job Applications for job listings on Angel.co using Selenium WebDriver.
 
 ---
 
-So you’re looking for a job? So am I, among countless others. Is it worth my time to apply to positions listed on job boards? In reality, I want to spend the least amount of time applying to positions online. The aggregated position listings on job boards are a perfect place to apply for each job methodically and sequentially. Selenium WebDriver Auto Apply is a program that automates filtering search criteria, sending a note to a hiring manager, and clicking submit. This is not my original idea. Although a quick google search wasn't too productive on how to automate job applications, a bud of mine created something similar. Max Caudle (Maison Caiby) mentioned this idea, and here is his [repo](https://github.com/MasonCaiby/auto_app). But I had a couple issues with ripping off his code and using it myself. 1) He wrote his app in Python, I have a limited understanding of Python and I like to understand what is going on. 2) Angel.co has since changed their website, so his code is outdated.
+So you’re looking for a job? The aggregated position listings on job boards are a perfect place to apply for each job methodically and sequentially. Selenium WebDriver Auto Apply is a program that automates filtering search criteria, sending a note to a hiring manager, and clicking submit. This is not my original idea. A bud of mine created something similar. Max Caudle (Maison Caiby) mentioned this idea, and here is his [repo](https://github.com/MasonCaiby/auto_app). But I had a couple issues with ripping off his code and using it myself. First He wrote his app in Python, I have a limited understanding of Python and I like to understand what is going on. Second, Angel.co has since changed their website, so his code is outdated.
 
-The two main reasons I wrote this program are
+The two main reasons I wrote this program are:
 
-1. I wanted to learn Selenium WebDriver (not its intended use) and writing 'virtual tests' for sites.
-2. I want to confirm my suspicion that blindly applying for jobs is a fruitless endeavor.
+1. To learn Selenium WebDriver (not its intended use) and automated testing.
+
+2. To confirm my suspicion that blindly applying for jobs is a fruitless endeavor.
 
 ---
 
