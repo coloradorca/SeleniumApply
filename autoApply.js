@@ -60,7 +60,8 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
 
     await driver.sleep(2000);
 
-    //the following is an anonymous asynchrounous IIFE that updates with the DOM every pass of the loop and applys for each job sequentially and methodically (of course, its a computer)
+    //the following is an anonymous asynchrounous IIFE that applies for each job sequentially
+    //and updates with the DOM for every pass of the while loop
     (async function () {
       let counter = 0;
       //change the number below to define how many jobs are applied for
@@ -145,7 +146,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
         } catch (err) {
           console.log(err);
         }
-        //increment the counter and 2020-04-21-18-09-29.pngstep to the next job
+        //increment the counter and step to the next job
         counter++;
       }
       return;
