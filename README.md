@@ -11,7 +11,7 @@ So you’re looking for a job? So am I, among countless others. Is it worth my t
 The two main reasons I wrote this program are
 
 1. I wanted to learn Selenium WebDriver (not its intended use) and writing 'virtual tests' for sites.
-2. I want to prove my suspicion that blindly applying for jobs is a fruitless endeavor.
+2. I want to confirm my suspicion that blindly applying for jobs is a fruitless endeavor.
 
 ---
 
@@ -31,9 +31,9 @@ Install [Selenium](https://www.npmjs.com/package/selenium-webdriver)
 
 `npm install selenium-webdriver`
 
-Install a [specific webdriver](https://www.selenium.dev/documentation/en/webdriver/driver_requirements/#quick-reference) that you'll be using.
+Install a [webdriver](https://www.selenium.dev/documentation/en/webdriver/driver_requirements/#quick-reference) that you'll be using.
 
-Move the Webdriver to your PATH of choice, i.e.
+Move the Webdriver to your PATH env variable, i.e.
 
 `sudo mv chromedriver /usr/local/bin/`
 
