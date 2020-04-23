@@ -21,6 +21,8 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
       .findElement(By.name('user[password]'))
       .sendKeys(usernameAndPw[1], Key.ENTER);
 
+    await driver.sleep(1000);
+
     //click filter button to add more filters (narrow down to non-senior roles)
     let filterbtn = driver.findElement(
       By.xpath(
@@ -65,7 +67,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
     (async function () {
       let counter = 0;
       //change the number below to define how many jobs are applied for
-      while (counter < 7) {
+      while (counter < 20) {
         try {
           // the apply button is selected and redefined after every pass to reflect the change in the DOM
           let applyButton = driver.findElement(
@@ -86,7 +88,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
               if (text) {
                 company = text;
               } else {
-                company = 'Undefined';
+                company = '';
               }
             });
 
@@ -103,7 +105,7 @@ const { usernameAndPw, loginUrl, note } = require('./usernameAndPw.js');
                 var contact = hirer.split(' ');
                 hiringContact = contact.slice(-2).join(' ');
               } else {
-                hiringContact = 'Could not get a contact';
+                hiringContact = company;
               }
             });
 
