@@ -4,8 +4,6 @@ Automate Job Applications for job listings on Angel.co using Selenium WebDriver.
 
 ## Description
 
----
-
 So you’re looking for a job? The aggregated position listings on job boards are a perfect place to apply for each job methodically and sequentially. Selenium WebDriver Auto Apply is a program that automates filtering search criteria, sending a note to a hiring manager, and clicking submit. 
 
 The two main reasons I wrote this program are:
